@@ -5,7 +5,6 @@ class GhTouchid < Formula
   sha256 "ac4cd14448b7cc40b7017124d93f8d4938b7f9cc6e80b5aaecffeb675607068b"
   license "MIT"
 
-  depends_on :macos
   depends_on macos: :tahoe
 
   def install
