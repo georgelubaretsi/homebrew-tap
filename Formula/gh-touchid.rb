@@ -1,8 +1,8 @@
 class GhTouchid < Formula
   desc "Touch ID-gated GitHub credentials for gh and Git"
   homepage "https://github.com/GeorgeLubaretsi/gh-touchid"
-  url "https://github.com/GeorgeLubaretsi/gh-touchid/releases/download/v0.3.1/gh-touchid-0.3.1-macos.tar.gz"
-  sha256 "ac4cd14448b7cc40b7017124d93f8d4938b7f9cc6e80b5aaecffeb675607068b"
+  url "https://github.com/GeorgeLubaretsi/gh-touchid/releases/download/v0.4.0/gh-touchid-0.4.0-macos.tar.gz"
+  sha256 "280fe6d71b269b2d0304770e94f422746c4128f9bd2febbfcdd9ba4b0a474f31"
   license "MIT"
 
   depends_on macos: :tahoe
@@ -19,7 +19,7 @@ class GhTouchid < Formula
       gh-touchid installs beside Homebrew's gh; neither gh nor Git goes through it until you set them up.
 
       Git goes through gh-touchid for an owner's repositories after:
-        gh-touchid git-setup <owner>
+        gh-touchid git setup <owner>
 
       To run `gh` through gh-touchid, put its gh folder first in PATH, in your shell's profile (this path stays
       the same across updates):
