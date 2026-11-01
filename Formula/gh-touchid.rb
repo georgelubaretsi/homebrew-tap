@@ -1,16 +1,17 @@
 class GhTouchid < Formula
   desc "Touch ID-gated GitHub credentials for gh and Git"
   homepage "https://github.com/GeorgeLubaretsi/gh-touchid"
-  url "https://github.com/GeorgeLubaretsi/gh-touchid/releases/download/v0.4.2/gh-touchid-0.4.2-macos.tar.gz"
-  sha256 "b05b03d9f7ef2eaef922bfc5ea49a6fae3d8b9c014d5506adef9d5457d359ba0"
+  url "https://github.com/GeorgeLubaretsi/gh-touchid/releases/download/v0.5.0/gh-touchid-0.5.0-macos.tar.gz"
+  sha256 "13d8c7cc180e051029babc4f7093c551cf4304329439ab62f93f20f895a4e8c8"
   license "MIT"
 
   depends_on macos: :tahoe
 
   def install
     bin.install "bin/gh-touchid"
-    # libexec/bin/gh, which runs gh through gh-touchid, outside bin so that it sits beside Homebrew's gh; and GitHub's
-    # gh in libexec/gh-touchid, which gh-touchid finds next to its own executable and checks before running it
+    # libexec/bin/gh, which runs gh through gh-touchid, outside bin so that it sits beside Homebrew's gh; and in
+    # libexec/gh-touchid GitHub's gh, which gh-touchid finds next to its own executable and checks before running it,
+    # and gh-touchid-adapter, which `gh-touchid rpc` and `gh-touchid mcp` run
     libexec.install "libexec/bin", "libexec/gh-touchid"
   end
 
@@ -33,6 +34,9 @@ class GhTouchid < Formula
 
   test do
     system bin/"gh-touchid", "help"
+    # `gh-touchid rpc` finds the adapter in libexec and answers a call that reads nothing stored
+    request = '{"jsonrpc":"2.0","id":1,"method":"version","params":{}}'
+    assert_match(/"result":\{"version":"\d+(\.\d+)*"\}/, pipe_output("#{bin}/gh-touchid rpc", "#{request}\n", 0))
     # Running gh through the wrapper needs a token from gh-touchid (Touch ID and a stored App or account), even for
     # `gh --version`, so the test checks only that the wrapper is installed where the caveats point.
     assert_predicate opt_libexec/"bin/gh", :executable?
